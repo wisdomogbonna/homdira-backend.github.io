@@ -16,25 +16,26 @@ app.use(express.json());
 // ----- MongoDB -----
 mongoose
   .connect(process.env.MONGO_URI)
-    .then(() => console.log("✅ MongoDB connected"))
-      .catch((err) => console.error("MongoDB Error:", err));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("MongoDB Error:", err));
 
-      // ----- Cloudinary -----
-      cloudinary.v2.config({
-          cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-            api_key: process.env.CLOUDINARY_API_KEY,
-              api_secret: process.env.CLOUDINARY_API_SECRET,
-      });
+// ----- Cloudinary -----
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-      // ----- Routes -----
-      app.use("/api/auth", authRoutes);
-      app.use("/api/properties", propertyRoutes);
-      app.use("/api/payments", paymentRoutes);
+// ----- Routes -----
+app.use("/api/auth", authRoutes);
+app.use("/api/properties", propertyRoutes);
+app.use("/api/payments", paymentRoutes);
 
-      // ----- Default -----
-      app.get("/", (req, res) => res.send("🏠 Homdira backend is running 🚀"));
+// ----- Default Route -----
+app.get("/", (req, res) => {
+  res.send("🏠 Homdira backend is running 🚀");
+});
 
-      // ----- Start -----
-      const PORT = process.env.PORT || 5000;
-      app.listen(PORT, () => console.log(`🚀 Server live on port ${PORT}`));
-      })
+// ----- Start Server -----
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`🚀 Server live on port ${PORT}`));
